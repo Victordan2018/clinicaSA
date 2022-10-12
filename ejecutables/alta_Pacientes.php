@@ -1,0 +1,23 @@
+<?php
+include 'conexion.php';
+$apellido_p = $_POST['apellido_paterno']; 
+$apellido_m = $_POST['apellido_materno']; 
+$nombre = $_POST['nombre'];
+$edad = $_POST['edad'];
+$enfermedad = $_POST['enfermedad'];
+$con=new Conexion();
+$conectar=$con->con();
+if(!empty($apellido_p) && !empty($apellido_m) && !empty($nombre) && !empty($edad) && !empty($enfermedad)){
+	echo "Correcto;";
+	$sSQL=$conectar->query("INSERT INTO pacientes(apellido_paterno, apellido_materno, nombre, edad, id_enfermedad) VALUES ('$apellido_p', '$apellido_m', '$nombre', '$edad', '$enfermedad')"); 
+    if($sSQL){
+      echo '<p>Los datos han sido dados de alta con exito.</p> ';
+      header( "refresh:1; url=lista_Pacientes.php" ); 
+    }else{
+      echo 'Checa los datos'.$conectar->error; 
+    }
+ }else{
+    echo '<p>Por favor ponte en contacto con el admin.</p> '; 
+ }
+
+?>
